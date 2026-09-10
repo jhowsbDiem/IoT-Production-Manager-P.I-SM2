@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="WBwYW58ukpRAxcSECy5N">
+    <mxGraphModel dx="1030" dy="623" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-6" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Tela de inicio&lt;/div&gt;&lt;div&gt;com login da&lt;/div&gt;&lt;div&gt;supervisora.&lt;/div&gt;&lt;div&gt;(Podemos mais&lt;/div&gt;&lt;div&gt;para frente pensar&lt;/div&gt;&lt;div&gt;em login para o&lt;/div&gt;&lt;div&gt;dono).&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-7" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-6" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="3RT4n_kk6V5H0i0NtCJX-9" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="180" y="130" as="sourcePoint" />
+            <mxPoint x="280" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-8" connectable="0" parent="3RT4n_kk6V5H0i0NtCJX-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;div&gt;Executou o login&lt;/div&gt;&lt;div&gt;com ID e senha&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.1444" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-9" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Clientes:&lt;/div&gt;&lt;div&gt;- Cliente 1&lt;/div&gt;&lt;div&gt;- Cliente 2&lt;/div&gt;&lt;div&gt;- Cliente 3&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="280" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-10" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-9" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="310" y="230" as="sourcePoint" />
+            <mxPoint x="340" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-11" connectable="0" parent="3RT4n_kk6V5H0i0NtCJX-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Clicou em um cliente" vertex="1">
+          <mxGeometry relative="1" x="0.07" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-12" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Produtos:&lt;/div&gt;&lt;div&gt;-P1&lt;/div&gt;&lt;div&gt;-P2&lt;/div&gt;&lt;div&gt;-P3&lt;/div&gt;&lt;div&gt;produtos&amp;nbsp;&lt;/div&gt;&lt;div&gt;do cliente&lt;/div&gt;&lt;div&gt;listados&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="280" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-16" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-12" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points" />
+            <mxPoint x="390" y="300" as="sourcePoint" />
+            <mxPoint x="480" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-17" connectable="0" parent="3RT4n_kk6V5H0i0NtCJX-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Escolheu&lt;div&gt;Produto&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0967" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-18" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;Detalhes do P1.&lt;/div&gt;&lt;div&gt;Adicionar lote.&lt;/div&gt;&lt;div&gt;Lotes:&lt;/div&gt;&lt;div&gt;- lote 09/09/26&lt;/div&gt;&lt;div&gt;- lote 02/05/26&lt;/div&gt;&lt;div&gt;Lotes por data.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="480" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-19" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-18" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="630" y="215.71428571428567" as="sourcePoint" />
+            <mxPoint x="540" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-20" connectable="0" parent="3RT4n_kk6V5H0i0NtCJX-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Detalhes do Produto." vertex="1">
+          <mxGeometry relative="1" x="-0.2333" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-21" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="Detalhes do Produto:&lt;div&gt;Aqui Detalhes como componentes e quantidade de componentes.&lt;/div&gt;&lt;div&gt;foto do produto e descrição de montagem.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="480" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-26" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-21" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.333;exitDx=0;exitDy=0;exitPerimeter=0;" target="3RT4n_kk6V5H0i0NtCJX-27" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="680" y="130" as="sourcePoint" />
+            <mxPoint x="680" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-27" parent="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="A validar com cliente:&lt;div&gt;esta aba será escrita na programação ou o próprio cliente escreve?&lt;/div&gt;&lt;div&gt;Escolha acarreta em estruturas diferentes no banco de dados.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="160" x="640" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-28" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-18" style="endArrow=classic;html=1;rounded=0;exitX=1.017;exitY=0.336;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="620" y="290" as="sourcePoint" />
+            <mxPoint x="680" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-29" connectable="0" parent="3RT4n_kk6V5H0i0NtCJX-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Adicionar&lt;div&gt;Lote.&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.3362" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;&quot;&gt;Na mesma aba somente adiciona Caixas de resposta abaixo da opção com descrição:&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&quot;nome do lote&quot;, &quot;Data do lote&quot;.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="680" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-33" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-32" style="endArrow=classic;html=1;rounded=0;exitX=1.011;exitY=0.338;exitDx=0;exitDy=0;exitPerimeter=0;" value="A validar">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="770" y="310" as="sourcePoint" />
+            <mxPoint x="880" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-34" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Muitas variaveis envolvidas, um lote pode envolver diferentes placas ou somente uma placa, se envolve varias placas é necessario ter tópicos para&amp;nbsp; atribuir cada funcionário a uma placa especifica do conjunto do produto.&lt;div&gt;validar solução mas acredito que uma pagina completa bem descritiva e interativa pode ser a solução.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="210" width="120" x="880" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-35" edge="1" parent="1" source="3RT4n_kk6V5H0i0NtCJX-18" style="endArrow=classic;html=1;rounded=0;exitX=0.473;exitY=1.014;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.473;entryY=0.021;entryDx=0;entryDy=0;entryPerimeter=0;" target="3RT4n_kk6V5H0i0NtCJX-37" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="570" y="380" as="sourcePoint" />
+            <mxPoint x="537.48" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-36" connectable="0" parent="3RT4n_kk6V5H0i0NtCJX-35" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Lote." vertex="1">
+          <mxGeometry relative="1" x="-0.1456" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3RT4n_kk6V5H0i0NtCJX-37" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="A validar o estilo da aba de lotes, precisa ser simples e bem descritiva para fácil consulta de informações do cliente." vertex="1">
+          <mxGeometry height="120" width="120" x="480" y="360" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
