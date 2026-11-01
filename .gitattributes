@@ -1,0 +1,3 @@
+# O grupo trabalha no Windows e a CI roda no Linux: o arquivo vale para
+# todos, ao contrário do core.autocrlf, que cada um configura do seu jeito.
+* text=auto eol=lf
