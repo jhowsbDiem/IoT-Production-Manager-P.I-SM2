@@ -1,17 +1,13 @@
-## O que muda
+## Resumo
+<!-- O que este pull request entrega, e por quê. -->
 
-<!-- Uma ou duas frases. Troque o # pelo número da issue. -->
+## Issues
+<!-- As issues incluídas, uma por linha: #N -->
 
-Closes #
-
-## Como verificar
-
-<!-- O que abrir, onde clicar e o que deve aparecer. -->
-
-1.
+## Verificação
+<!-- Como foi verificado: o que foi aberto, onde se clicou e o que apareceu. -->
 
 ## Checklist
-
-- [ ] A branch de destino é a branch da funcionalidade (`feature/<nome>`), não a `main`.
-- [ ] Conferi à mão o que a issue pede.
-- [ ] Os commits seguem o padrão do CONTRIBUTING.
+- [ ] A branch de destino está certa: a da funcionalidade (`feature/<nome>`) para o pull request de uma issue; a `main` só para o da funcionalidade inteira.
+- [ ] A documentação descreve o novo estado (estado atual no README, CONTRIBUTING).
+- [ ] Todos os commits seguem o padrão de commit do CONTRIBUTING.md.

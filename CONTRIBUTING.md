@@ -177,4 +177,7 @@ Funções e classes levam docstring (`"""..."""`), com a mesma regra.
   [app.diagrams.net](https://app.diagrams.net).
 - [`.github/pull_request_template.md`](.github/pull_request_template.md): o
   modelo que todo pull request novo traz preenchido.
+- [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/): os modelos de issue
+  (bug, documentação, melhoria, funcionalidade, dívida técnica), oferecidos
+  ao abrir uma issue nova.
 - [`LICENSE`](LICENSE): a licença MIT.
