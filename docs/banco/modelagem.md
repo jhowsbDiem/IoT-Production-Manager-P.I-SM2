@@ -23,8 +23,9 @@ com a quantidade e a posição na placa (por exemplo, "C1 a C12"), e os
 mesmo capacitor pode ser usado em várias placas.
 
 Uma placa pode ser montada de mais de um jeito, e por isso tem um ou mais
-procedimentos: o padrão e as variações que a supervisora cria, como "com
-verniz" ou "retrabalho". Cada procedimento é formado por **etapas**,
+procedimentos: o padrão e as variações que a supervisora cria, como "Com
+botão", "Com sensor de chama" ou "retrabalho". Cada procedimento é formado
+por **etapas**,
 numeradas na ordem recomendada de execução. Um procedimento que já foi usado
 na produção não é alterado: para mudar o jeito de montar, a supervisora cria
 um procedimento novo, e o histórico continua apontando para o antigo.
@@ -99,3 +100,147 @@ Procedimento e Etapa. Uma entidade Receita teria exatamente um registro por
 placa e nenhum dado próprio, porque a foto pertence à placa. Por isso
 "receita" é um conceito do negócio, usado no texto, e não uma entidade do
 modelo.
+
+---
+
+## 3. Atributos e tipos
+
+Cada entidade tem uma tabela com os seus atributos e o tipo de cada um. As
+convenções:
+
+* **Nomes** em minúsculas, sem acento, com `_` entre as palavras.
+* **(PK)** marca a chave primária, e **(FK → Entidade)** marca a chave
+  estrangeira, que aponta para a entidade indicada.
+* **Atributos de lista fixa** (tipo, resultado, perfil) são texto; os valores
+  aceitos estão no dicionário de dados.
+* **Nada que pode ser calculado é guardado**: o número de unidades de um lote
+  é a contagem das suas unidades, o estado de uma unidade sai dos seus
+  apontamentos, e o consumo de componentes sai dos itens da receita.
+
+### Cliente
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `cnpj` | `VARCHAR(14)` |
+| `telefone` | `VARCHAR(20)` |
+| `email` | `VARCHAR(100)` |
+
+### Produto
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `cliente_id` **(FK → Cliente)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `descricao` | `TEXT` |
+
+### Placa
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `produto_id` **(FK → Produto)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `foto` | `VARCHAR(255)` |
+
+### Componente
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `codigo` | `VARCHAR(50)` |
+| `descricao` | `VARCHAR(200)` |
+| `especificacao` | `VARCHAR(100)` |
+
+### Item da receita
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `placa_id` **(FK → Placa)** | `INTEGER` |
+| `componente_id` **(FK → Componente)** | `INTEGER` |
+| `quantidade` | `INTEGER` |
+| `posicao` | `VARCHAR(100)` |
+
+### Procedimento
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `placa_id` **(FK → Placa)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `padrao` | `BOOLEAN` |
+| `criado_em` | `TIMESTAMP` |
+
+### Etapa
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `procedimento_id` **(FK → Procedimento)** | `INTEGER` |
+| `ordem` | `INTEGER` |
+| `titulo` | `VARCHAR(100)` |
+| `instrucao` | `TEXT` |
+| `tipo` | `VARCHAR(20)` |
+
+### Lote
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `produto_id` **(FK → Produto)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `data_abertura` | `DATE` |
+
+### Unidade
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `lote_id` **(FK → Lote)** | `INTEGER` |
+| `numero` | `INTEGER` |
+
+### Procedimento do lote
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `lote_id` **(FK → Lote)** | `INTEGER` |
+| `procedimento_id` **(FK → Procedimento)** | `INTEGER` |
+
+### Apontamento
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `unidade_id` **(FK → Unidade)** | `INTEGER` |
+| `etapa_id` **(FK → Etapa)** | `INTEGER` |
+| `funcionario_id` **(FK → Funcionário)** | `INTEGER` |
+| `usuario_id` **(FK → Usuário)** | `INTEGER` |
+| `data_hora` | `TIMESTAMP` |
+| `registrado_em` | `TIMESTAMP` |
+| `resultado` | `VARCHAR(20)` |
+| `observacao` | `TEXT` |
+
+### Funcionário
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `usuario_id` **(FK → Usuário)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `funcao` | `VARCHAR(50)` |
+| `ativo` | `BOOLEAN` |
+
+### Usuário
+
+| Atributo | Tipo |
+| :--- | :--- |
+| `id` **(PK)** | `INTEGER` |
+| `nome` | `VARCHAR(100)` |
+| `login` | `VARCHAR(50)` |
+| `senha` | `VARCHAR(128)` |
+| `perfil` | `VARCHAR(20)` |
+| `ativo` | `BOOLEAN` |
