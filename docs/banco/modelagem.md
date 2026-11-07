@@ -244,3 +244,64 @@ convenções:
 | `senha` | `VARCHAR(128)` |
 | `perfil` | `VARCHAR(20)` |
 | `ativo` | `BOOLEAN` |
+
+---
+
+## 4. Chaves primárias
+
+Toda entidade é identificada por um `id`: um número inteiro que o banco gera
+sozinho, em sequência, quando o registro é criado, e que nunca muda. É uma
+chave artificial: não vem do negócio e existe só para identificar o
+registro.
+
+### Por que uma chave artificial
+
+Alguns dados do negócio poderiam identificar um registro, como o CNPJ de um
+cliente ou o código de um componente. Eles não servem como chave primária
+por três motivos:
+
+* **Podem mudar.** Um código de componente pode ser renomeado, e um login
+  pode ser trocado. A chave primária é copiada nas chaves estrangeiras das
+  outras tabelas; se ela mudasse, todas as cópias teriam de mudar junto.
+* **Podem faltar.** O CNPJ de um cliente pode não estar à mão no primeiro
+  cadastro, e uma chave primária nunca pode ficar vazia.
+* **Muitas entidades não têm nenhum.** O nome de um lote é livre, o número
+  de uma unidade se repete em todos os lotes, e um apontamento não tem
+  nenhuma combinação de dados que seja única.
+
+Um inteiro gerado pelo banco não tem nenhum desses problemas, ocupa pouco
+espaço e deixa as ligações entre as tabelas mais rápidas. Os dados do
+negócio que não podem se repetir continuam protegidos, como atributos
+únicos.
+
+| Entidade | Chave primária | Motivo |
+| :--- | :--- | :--- |
+| **Cliente** | `id` | O CNPJ identifica a empresa, mas pode faltar no primeiro cadastro. Fica como atributo único. |
+| **Produto** | `id` | O nome não identifica: clientes diferentes podem ter produtos com o mesmo nome. |
+| **Placa** | `id` | O nome se repete entre produtos: quase todo produto tem uma "Placa principal". |
+| **Componente** | `id` | O código pode ser renomeado. Fica como atributo único. |
+| **Item da receita** | `id` | A combinação placa + componente não se repete, e fica como atributo único. O `id` mantém a mesma regra em todas as entidades. |
+| **Procedimento** | `id` | O nome se repete entre placas: quase toda placa tem um procedimento "Padrão". |
+| **Etapa** | `id` | O número de ordem só é único dentro do procedimento. A combinação procedimento + ordem fica como atributo único. |
+| **Lote** | `id` | O nome é livre, escolhido pela supervisora, e pode se repetir. |
+| **Unidade** | `id` | O número só é único dentro do lote: toda unidade 7 de todos os lotes tem o número 7. A combinação lote + número fica como atributo único. |
+| **Procedimento do lote** | `id` | A combinação lote + procedimento não se repete, e fica como atributo único. O `id` mantém a mesma regra em todas as entidades. |
+| **Apontamento** | `id` | Nenhuma combinação de atributos é única: a mesma pessoa pode registrar a mesma etapa, na mesma unidade, mais de uma vez, como num novo teste depois de um retrabalho. |
+| **Funcionário** | `id` | Nomes se repetem, e o funcionário não tem um documento obrigatório no sistema. |
+| **Usuário** | `id` | O login pode ser trocado. Fica como atributo único. |
+
+### Atributos únicos que não são chave
+
+Estes atributos, sozinhos ou combinados, não podem se repetir. O banco
+recusa um registro que repita algum deles.
+
+| Entidade | Atributo(s) únicos | O que garante |
+| :--- | :--- | :--- |
+| **Cliente** | `cnpj` | Dois clientes não têm o mesmo CNPJ. |
+| **Componente** | `codigo` | O mesmo componente não é cadastrado duas vezes no catálogo. |
+| **Usuário** | `login` | Duas pessoas não entram no sistema com o mesmo login. |
+| **Item da receita** | `placa_id` + `componente_id` | Um componente aparece uma vez só na receita de uma placa; a quantidade diz quantos ela leva. |
+| **Etapa** | `procedimento_id` + `ordem` | Duas etapas do mesmo procedimento não têm o mesmo número. |
+| **Unidade** | `lote_id` + `numero` | A numeração das unidades não se repete dentro de um lote. |
+| **Procedimento do lote** | `lote_id` + `procedimento_id` | O mesmo procedimento não é escolhido duas vezes para o mesmo lote. |
+| **Funcionário** | `usuario_id` | Um usuário fica ligado a no máximo um funcionário. Vale só quando o atributo está preenchido. |
