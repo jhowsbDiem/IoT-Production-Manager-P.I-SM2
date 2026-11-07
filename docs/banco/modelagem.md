@@ -336,3 +336,142 @@ como atributos: no modelo conceitual, a ligação é o próprio relacionamento.
 O arquivo editável é o [`der.drawio`](der.drawio).
 
 ![Diagrama de entidade e relacionamento do IoT Production Manager](der.png)
+
+---
+
+## 6. Dicionário de dados
+
+Para cada atributo: o tipo, o tamanho, a chave, se é obrigatório e o que
+guarda. Na coluna **Chave**, `Único` marca os atributos que não podem se
+repetir (seção 4). Na coluna **Obrigatório**, `Condicional` quer dizer que a
+obrigação depende de outro dado, explicado na descrição. Os atributos de
+lista fixa guardam códigos sem acento, e a descrição lista os valores
+aceitos.
+
+### Cliente
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do cliente, gerado pelo banco. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome da empresa cliente. |
+| `cnpj` | `VARCHAR` | 14 | Único | Não | CNPJ da empresa, só os 14 dígitos, sem pontos, barra ou traço. |
+| `telefone` | `VARCHAR` | 20 | — | Não | Telefone de contato, com DDD. |
+| `email` | `VARCHAR` | 100 | — | Não | E-mail de contato. |
+
+### Produto
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do produto, gerado pelo banco. |
+| `cliente_id` | `INTEGER` | — | FK → Cliente | Sim | Cliente que encomenda o produto. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome do produto, como "Sensor-X v2". |
+| `descricao` | `TEXT` | — | — | Não | Descrição livre do produto. |
+
+### Placa
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador da placa, gerado pelo banco. |
+| `produto_id` | `INTEGER` | — | FK → Produto | Sim | Produto que a placa compõe. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome da placa dentro do produto, como "Placa principal". |
+| `foto` | `VARCHAR` | 255 | — | Não | Caminho do arquivo da foto de referência da placa. A imagem fica guardada fora do banco. |
+
+### Componente
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do componente, gerado pelo banco. |
+| `codigo` | `VARCHAR` | 50 | Único | Sim | Código do componente no catálogo da equipe. |
+| `descricao` | `VARCHAR` | 200 | — | Sim | O que é o componente, como "Resistor SMD 0603" ou "Display OLED I2C". |
+| `especificacao` | `VARCHAR` | 100 | — | Não | O que distingue o componente de outros do mesmo tipo, como "10 kΩ", "100 nF 50 V" ou "0,96 pol. com faixa amarela". |
+
+### Item da receita
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do item, gerado pelo banco. |
+| `placa_id` | `INTEGER` | — | FK → Placa, único com `componente_id` | Sim | Placa que leva o componente. |
+| `componente_id` | `INTEGER` | — | FK → Componente, único com `placa_id` | Sim | Componente que a placa leva. |
+| `quantidade` | `INTEGER` | — | — | Sim | Quantas unidades do componente a placa leva. Maior que zero. |
+| `posicao` | `VARCHAR` | 100 | — | Não | Onde o componente vai na placa, pelas referências do esquema, como "C1 a C12". |
+
+### Procedimento
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do procedimento, gerado pelo banco. |
+| `placa_id` | `INTEGER` | — | FK → Placa | Sim | Placa que o procedimento monta. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome do procedimento, como "Padrão", "Com botão" ou "Retrabalho". |
+| `padrao` | `BOOLEAN` | — | — | Sim | Verdadeiro no procedimento que um lote novo recebe quando a supervisora não escolhe outro. |
+| `criado_em` | `TIMESTAMP` | — | — | Sim | Data e hora em que o procedimento foi criado, preenchidas pelo sistema. |
+
+### Etapa
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador da etapa, gerado pelo banco. |
+| `procedimento_id` | `INTEGER` | — | FK → Procedimento, único com `ordem` | Sim | Procedimento a que a etapa pertence. |
+| `ordem` | `INTEGER` | — | Único com `procedimento_id` | Sim | Posição da etapa na ordem recomendada de execução, a partir de 1. |
+| `titulo` | `VARCHAR` | 100 | — | Sim | O que a etapa faz, em poucas palavras, como "Soldar os capacitores". |
+| `instrucao` | `TEXT` | — | — | Não | Como fazer a etapa, em detalhe: cuidados, ferramentas, o que conferir. |
+| `tipo` | `VARCHAR` | 20 | — | Sim | `montagem` ou `teste`. Define se o apontamento da etapa leva resultado. |
+
+### Lote
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do lote, gerado pelo banco. |
+| `produto_id` | `INTEGER` | — | FK → Produto | Sim | Produto que o lote produz. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome do lote, escolhido pela supervisora. |
+| `data_abertura` | `DATE` | — | — | Sim | Data em que o lote foi aberto. |
+
+### Unidade
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador da unidade, gerado pelo banco. |
+| `lote_id` | `INTEGER` | — | FK → Lote, único com `numero` | Sim | Lote em que a unidade é produzida. |
+| `numero` | `INTEGER` | — | Único com `lote_id` | Sim | Número da unidade dentro do lote, de 1 até o número de unidades. |
+
+### Procedimento do lote
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador da escolha, gerado pelo banco. |
+| `lote_id` | `INTEGER` | — | FK → Lote, único com `procedimento_id` | Sim | Lote que segue o procedimento. |
+| `procedimento_id` | `INTEGER` | — | FK → Procedimento, único com `lote_id` | Sim | Procedimento que uma das placas do produto segue nesse lote. |
+
+### Apontamento
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do apontamento, gerado pelo banco. |
+| `unidade_id` | `INTEGER` | — | FK → Unidade | Sim | Unidade em que o trabalho foi feito. |
+| `etapa_id` | `INTEGER` | — | FK → Etapa | Sim | Etapa que foi feita. O tipo da etapa diz se o apontamento é de montagem ou de teste. |
+| `funcionario_id` | `INTEGER` | — | FK → Funcionário | Sim | Funcionário que fez o trabalho. |
+| `usuario_id` | `INTEGER` | — | FK → Usuário | Sim | Usuário que registrou o apontamento no sistema. |
+| `data_hora` | `TIMESTAMP` | — | — | Sim | Data e hora em que o trabalho foi feito. |
+| `registrado_em` | `TIMESTAMP` | — | — | Sim | Data e hora em que o apontamento foi registrado, preenchidas pelo sistema. |
+| `resultado` | `VARCHAR` | 20 | — | Condicional | `aprovado` ou `reprovado`. Obrigatório quando a etapa é de teste, vazio quando é de montagem. |
+| `observacao` | `TEXT` | — | — | Não | Comentário livre, como o defeito encontrado num teste reprovado ou o que foi feito num retrabalho. |
+
+### Funcionário
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do funcionário, gerado pelo banco. |
+| `usuario_id` | `INTEGER` | — | FK → Usuário, único | Não | Usuário do funcionário, quando ele tem acesso ao sistema. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome do funcionário. |
+| `funcao` | `VARCHAR` | 50 | — | Não | Função na equipe, como "montador" ou "técnico de teste". |
+| `ativo` | `BOOLEAN` | — | — | Sim | Falso para quem saiu da equipe. O funcionário inativo continua nos apontamentos antigos. |
+
+### Usuário
+
+| Atributo | Tipo | Tamanho | Chave | Obrigatório | Descrição |
+| :--- | :--- | :---: | :--- | :---: | :--- |
+| `id` | `INTEGER` | — | PK | Sim | Identificador do usuário, gerado pelo banco. |
+| `nome` | `VARCHAR` | 100 | — | Sim | Nome de quem usa o sistema. |
+| `login` | `VARCHAR` | 50 | Único | Sim | Nome usado para entrar no sistema. |
+| `senha` | `VARCHAR` | 128 | — | Sim | Senha cifrada. O banco nunca guarda a senha como foi digitada. |
+| `perfil` | `VARCHAR` | 20 | — | Sim | `supervisora`, `dono` ou `tecnico`. Define o que o usuário pode fazer. |
+| `ativo` | `BOOLEAN` | — | — | Sim | Falso para quem perdeu o acesso. O usuário inativo continua nos registros antigos. |
