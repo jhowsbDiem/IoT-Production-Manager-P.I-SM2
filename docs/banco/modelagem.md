@@ -305,3 +305,34 @@ recusa um registro que repita algum deles.
 | **Unidade** | `lote_id` + `numero` | A numeração das unidades não se repete dentro de um lote. |
 | **Procedimento do lote** | `lote_id` + `procedimento_id` | O mesmo procedimento não é escolhido duas vezes para o mesmo lote. |
 | **Funcionário** | `usuario_id` | Um usuário fica ligado a no máximo um funcionário. Vale só quando o atributo está preenchido. |
+
+---
+
+## 5. Relacionamentos
+
+| Relacionamento | Entidades | Cardinalidade | Por que existe |
+| :--- | :--- | :---: | :--- |
+| **encomenda** | Cliente → Produto | 1:N | Um cliente encomenda vários produtos, e cada produto é de um cliente só. Responde "o que produzimos para este cliente?". |
+| **compõe** | Produto → Placa | 1:N | Um produto é composto por uma ou mais placas, e cada placa pertence a um produto. É na placa que fica a receita. |
+| **tem** | Placa → Procedimento | 1:N | Uma placa pode ser montada de mais de um jeito; cada procedimento é de uma placa só. |
+| **é formado por** | Procedimento → Etapa | 1:N | Um procedimento é a sequência das suas etapas, e cada etapa pertence a um procedimento. |
+| **leva** | Placa → Componente, por meio do Item da receita | N:N | Uma placa leva vários componentes, e o mesmo componente é usado em várias placas. A quantidade e a posição na placa ficam no Item da receita. |
+| **é produzido em** | Produto → Lote | 1:N | Um produto é produzido em vários lotes ao longo do tempo, e cada lote é de um produto só. |
+| **contém** | Lote → Unidade | 1:N | Um lote contém as suas unidades, e cada unidade nasce num lote. |
+| **segue** | Lote → Procedimento, por meio do Procedimento do lote | N:N | Um lote segue um procedimento para cada placa do produto, e o mesmo procedimento é seguido por vários lotes. Define as etapas que contam para "quanto falta". |
+| **recebe** | Unidade → Apontamento | 1:N | Uma unidade recebe vários apontamentos ao longo da montagem, e cada apontamento é de uma unidade. |
+| **refere-se a** | Apontamento → Etapa | N:1 | Cada apontamento registra uma etapa, e a mesma etapa é feita em muitas unidades. É "a parte" que alguém fez. |
+| **faz** | Funcionário → Apontamento | 1:N | Um funcionário faz muitos apontamentos, e cada apontamento diz quem fez o trabalho. |
+| **registra** | Usuário → Apontamento | 1:N | Um usuário registra muitos apontamentos, e cada apontamento guarda quem o registrou no sistema. |
+| **tem acesso como** | Funcionário → Usuário | 1:1, opcional | Hoje nenhum funcionário tem acesso. Quando um ganhar, ele fica ligado a um usuário, e um usuário a no máximo um funcionário. Os dois lados são opcionais: a supervisora é usuário sem ser funcionário. |
+
+### Diagrama de entidade e relacionamento
+
+O DER abaixo mostra as 13 entidades, os seus atributos e os relacionamentos
+da tabela, na notação de Chen: entidade em retângulo, relacionamento em
+losango, entidade associativa em losango dentro de retângulo e atributo em
+elipse, com a chave primária sublinhada. As chaves estrangeiras não aparecem
+como atributos: no modelo conceitual, a ligação é o próprio relacionamento.
+O arquivo editável é o [`der.drawio`](der.drawio).
+
+![Diagrama de entidade e relacionamento do IoT Production Manager](der.png)
