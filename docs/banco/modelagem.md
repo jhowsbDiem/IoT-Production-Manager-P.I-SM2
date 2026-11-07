@@ -475,3 +475,31 @@ aceitos.
 | `senha` | `VARCHAR` | 128 | — | Sim | Senha cifrada. O banco nunca guarda a senha como foi digitada. |
 | `perfil` | `VARCHAR` | 20 | — | Sim | `supervisora`, `dono` ou `tecnico`. Define o que o usuário pode fazer. |
 | `ativo` | `BOOLEAN` | — | — | Sim | Falso para quem perdeu o acesso. O usuário inativo continua nos registros antigos. |
+
+---
+
+## 7. Regras de negócio
+
+Regras seguindo a ordem do mini mundo: a receita, a produção, os
+apontamentos, as consultas e o acesso.
+
+| Regra de Negócio | Descrição |
+| :--- | :--- |
+| **RN01 — Componente único na receita** | Um componente aparece no máximo uma vez na receita de uma placa. Se a placa leva doze capacitores iguais, é um item da receita com quantidade 12. |
+| **RN02 — Ordem das etapas** | As etapas de um procedimento são numeradas em sequência, sem repetir o número. A ordem é a recomendada, não a obrigatória: os apontamentos são aceitos em qualquer ordem, e duas pessoas podem trabalhar ao mesmo tempo em etapas diferentes da mesma unidade. |
+| **RN03 — Um procedimento padrão por placa** | Cada placa tem exatamente um procedimento padrão. Marcar outro procedimento como padrão desmarca o anterior. |
+| **RN04 — Procedimento usado não muda** | Um procedimento escolhido em algum lote não tem o nome nem as etapas alterados, e nem ele nem as suas etapas são apagados. Para mudar o jeito de montar, a supervisora cria um procedimento novo. Só o atributo `padrao` pode mudar, porque ele vale para os lotes novos, não para o que já foi feito. |
+| **RN05 — Procedimento de cada placa no lote** | Ao abrir um lote, cada placa do produto recebe exatamente um procedimento, sempre um procedimento daquela placa. Se a supervisora não escolher outro, é o padrão. |
+| **RN06 — Unidades do lote** | Ao abrir um lote, a supervisora informa quantas unidades ele tem, e o sistema cria as unidades numeradas de 1 até esse número. O número de unidades de um lote é a contagem das suas unidades. |
+| **RN07 — Lote de um produto só** | Todas as unidades de um lote são do produto do lote, e todas têm as mesmas placas: as do produto. |
+| **RN08 — Etapa do apontamento** | Um apontamento só registra uma etapa de um procedimento de uma placa do produto daquele lote. Se a etapa é de um procedimento escolhido no lote, é trabalho normal. Se é de outro procedimento da mesma placa, é retrabalho. |
+| **RN09 — Resultado do teste** | Um apontamento numa etapa de teste tem resultado, `aprovado` ou `reprovado`. Um apontamento numa etapa de montagem não tem resultado. |
+| **RN10 — Funcionário ativo** | Só um funcionário ativo recebe apontamentos novos. Os apontamentos antigos de um funcionário que ficou inativo continuam como estão. |
+| **RN11 — Registro automático** | Ao registrar um apontamento, o sistema preenche quem registrou (`usuario_id`, o usuário que está no sistema) e quando (`registrado_em`, o momento do registro). A data e a hora do trabalho (`data_hora`) são informadas por quem registra. |
+| **RN12 — Unidade pronta** | Uma unidade está pronta quando, em cada procedimento escolhido no seu lote: cada etapa de montagem tem pelo menos um apontamento; e cada etapa de teste tem apontamento, e o mais recente (pela `data_hora`) está aprovado. Um teste reprovado tira a unidade de "pronta" até um novo teste aprovado. Etapas de retrabalho (de outros procedimentos da placa) não contam para essa conta. |
+| **RN13 — Consumo previsto** | O consumo previsto de um componente num lote é a soma das quantidades dele nos itens da receita de todas as placas do produto, multiplicada pelo número de unidades do lote. Exemplo: se a placa principal leva 12 capacitores C e a de alimentação leva 4, um lote de 50 unidades consome (12 + 4) × 50 = 800. É o previsto pela receita: perdas e retrabalho não entram na conta. |
+| **RN14 — Acesso da supervisora** | A supervisora faz tudo: cadastra clientes, produtos, placas, componentes, receitas e procedimentos, abre lotes, registra apontamentos e consulta a produção. |
+| **RN15 — Acesso do dono** | O dono só consulta: vê a produção, os lotes e os apontamentos, mas não cadastra nem altera nada. |
+| **RN16 — Acesso do técnico** | O técnico, quando existir, só registra apontamentos (montagem e teste) e consulta o que precisa para isso. Ele não altera cadastros, receitas, procedimentos nem componentes. |
+| **RN17 — Usuário ativo** | Só um usuário ativo entra no sistema. Os registros feitos por um usuário que ficou inativo continuam como estão. |
+| **RN18 — Histórico preservado** | Nada que um apontamento referencia é apagado: unidade, etapa, funcionário e usuário. Funcionários e usuários que saem são desativados, e procedimentos usados seguem a RN04. Assim todo apontamento continua dizendo quem fez o quê, em qual unidade. |
